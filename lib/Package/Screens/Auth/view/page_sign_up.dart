@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
+import 'package:flutter_pet/Helper/Utils/key_firebase.dart';
 import 'package:flutter_pet/Helper/Utils/path_icons.dart';
 import 'package:flutter_pet/Package/Components/Btn/custom_btn.dart';
+import 'package:flutter_pet/Package/Components/Loading/app_loading.dart';
+import 'package:flutter_pet/Package/Components/Loading/enum_loading.dart';
 import 'package:flutter_pet/Package/Components/Text_Filed/simple_filed.dart';
 import 'package:flutter_pet/Package/Screens/Auth/core/sign_up_controller.dart';
 import 'package:flutter_pet/Package/Screens/Auth/widget/hider_sign_up.dart';
@@ -45,18 +48,18 @@ class PageSignUp extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SimpleFiled(
-                            hint: 'Enter name',
-                            pIcon: Padding(
-                              padding: EdgeInsets.all(12.h),
-                              child: PathIcons.name,
-                            ),
-                            keybordType: TextInputType.name,
-                            onValidator: (value) {
-                              debugPrint('onValidator :' + value.toString());
-                              return AppValidators.isEmpty(value);
-                            },
-                            // onSaved: (value) => controller.type.value = value!,
-                          ),
+                              hint: 'Enter name',
+                              pIcon: Padding(
+                                padding: EdgeInsets.all(12.h),
+                                child: PathIcons.name,
+                              ),
+                              keybordType: TextInputType.name,
+                              onValidator: (value) {
+                                debugPrint('onValidator :' + value.toString());
+                                return AppValidators.isEmpty(value);
+                              },
+                              onSaved: (value) => _signUpController.dataRegister
+                                  .addAll({KeyFirebase.userNmae: value})),
                           SizedBox(height: 15.h),
                           SimpleFiled(
                             hint: 'Email',
@@ -69,7 +72,8 @@ class PageSignUp extends StatelessWidget {
                               debugPrint('onValidator :' + value.toString());
                               return AppValidators.isEmail(value);
                             },
-                            // onSaved: (value) => controller.type.value = value!,
+                            onSaved: (value) => _signUpController.dataRegister
+                                .addAll({KeyFirebase.email: value}),
                           ),
                           SizedBox(height: 15.h),
                           SimpleFiled(
@@ -86,8 +90,8 @@ class PageSignUp extends StatelessWidget {
                             onSIcon: () => _signUpController.viewPass(),
                             onValidator: (value) => AppValidators.isPass(value),
                             // onController: controller.password.value,
-                            // onSaved: (value) =>
-                            //     controller.password.value = value!,
+                            onSaved: (value) => _signUpController.dataRegister
+                                .addAll({KeyFirebase.pass: value}),
                           ),
                           SizedBox(height: 20.h),
                           Text(
@@ -105,7 +109,8 @@ class PageSignUp extends StatelessWidget {
                               debugPrint('onValidator :' + value.toString());
                               return AppValidators.isEmpty(value);
                             },
-                            // onSaved: (value) => controller.type.value = value!,
+                            onSaved: (value) => _signUpController.dataRegister
+                                .addAll({KeyFirebase.location: value}),
                           ),
                           SizedBox(height: 20.h),
                           SimpleFiled(
@@ -120,7 +125,8 @@ class PageSignUp extends StatelessWidget {
                               // ignore: todo
                               return AppValidators.isTim(value); //TODO::
                             },
-                            // onSaved: (value) => controller.type.value = value!,
+                            onSaved: (value) => _signUpController.dataRegister
+                                .addAll({KeyFirebase.workingHours: value}),
                           ),
                           SizedBox(height: 15.h),
                         ],
@@ -131,17 +137,19 @@ class PageSignUp extends StatelessWidget {
                   Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 60.h),
-                    child: CustomBtn(
-                      sizeHeight: 85.h,
-                      btnText: 'Sign Up',
-                      textStyle: AppTheme.h20(context: context)
-                          ?.copyWith(color: AppColors.movBackGround),
-                      backColor: AppColors.btnColorBottom,
-                      onTap: () {
-                        debugPrint('Sign Up');
-                        _signUpController.chackInput();
-                      },
-                    ),
+                    child: _signUpController.isLodeng.value
+                        ? const AppLoading(type: ChooseLoading.BUTTON)
+                        : CustomBtn(
+                            sizeHeight: 85.h,
+                            btnText: 'Sign Up',
+                            textStyle: AppTheme.h20(context: context)
+                                ?.copyWith(color: AppColors.movBackGround),
+                            backColor: AppColors.btnColorBottom,
+                            onTap: () {
+                              debugPrint('Sign Up');
+                              _signUpController.chackInput();
+                            },
+                          ),
                   ),
                 ],
               ),

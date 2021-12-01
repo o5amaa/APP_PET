@@ -11,7 +11,7 @@ class AppColors {
 
   // * loading
   static final Color lightLoading = _colorFromHex('#D47FA6');
-  static final Color darkLoading = _colorFromHex('#241332');
+  static final Color darkLoading = _colorFromHex('#35164E');
 
   // * color  PetApp 0xFF
   static final movBackGround = _colorFromHex('#241332');

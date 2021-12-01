@@ -49,4 +49,6 @@ class SignInController extends GetxController {
       obscurText(true);
     }
   }
+
+  // ^^ ^^^^^^^^^^^
 }
