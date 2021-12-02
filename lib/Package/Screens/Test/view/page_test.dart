@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_up.dart';
 import 'package:flutter_pet/Package/Screens/Auth/view/wrapper.dart';
 import 'package:flutter_pet/Package/Screens/Test/core/test_controller.dart';
 import 'package:get/get.dart';

@@ -3,7 +3,6 @@ import 'package:flutter_pet/Package/Components/Loading/app_loading.dart';
 import 'package:flutter_pet/Package/Components/Loading/enum_loading.dart';
 import 'package:flutter_pet/Package/Screens/Auth/core/auth_control.dart';
 import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_in.dart';
-import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_up.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/view/page_clinic_profile.dart';
 
 class Wrapper extends StatelessWidget {

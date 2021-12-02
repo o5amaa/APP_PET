@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Package/Components/Btn/simple_btn.dart';
-import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_in.dart';
 import 'package:flutter_pet/Services/Themes/theme_status.dart';
 import 'package:get/get.dart';
 

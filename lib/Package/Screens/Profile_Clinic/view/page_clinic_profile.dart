@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Helper/Utils/path_images.dart';
 import 'package:flutter_pet/Package/Screens/Auth/core/auth_control.dart';
-import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_in.dart';
-import 'package:flutter_pet/Package/Screens/Auth/view/wrapper.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/body_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/footer_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/hider_body_profil.dart';
