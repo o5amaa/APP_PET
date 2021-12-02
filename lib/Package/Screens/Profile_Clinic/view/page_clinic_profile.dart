@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Helper/Utils/path_images.dart';
+import 'package:flutter_pet/Package/Screens/Auth/core/auth_control.dart';
+import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_in.dart';
+import 'package:flutter_pet/Package/Screens/Auth/view/wrapper.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/body_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/footer_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/hider_body_profil.dart';
+import 'package:flutter_pet/Services/Themes/theme_status.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class PageClinicProfile extends StatelessWidget {
   static const String id = '/PageClinicProfile';
   const PageClinicProfile({Key? key}) : super(key: key);
+
+  static final AuthControl _authControl = Get.find<AuthControl>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,22 @@ class PageClinicProfile extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
+        leadingWidth: 100.w,
+        leading: Container(
+          margin: EdgeInsets.only(top: 10.w),
+          child: TextButton(
+              onPressed: () {
+                debugPrint('click log OUT');
+                _authControl.signOut();
+                
+                // AuthControl().signOut();
+              },
+              child: Text(
+                'Log Out',
+                style: AppTheme.h20(context: context)
+                    ?.copyWith(color: AppColors.movLight),
+              )),
+        ),
         backgroundColor: AppColors.whiteColor,
         iconTheme: IconThemeData(color: AppColors.movLight),
       ),

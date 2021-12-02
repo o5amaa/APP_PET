@@ -26,7 +26,7 @@ class HiderSignUpWidget extends StatelessWidget {
           backColor: AppColors.btnWithoutColor,
           onTap: () {
             // Get.toNamed(PageSignIn.id);
-            Get.toNamed(PageSignIn.id);
+            Get.back();
           },
         ),
         // const SizedBox(width: 20),

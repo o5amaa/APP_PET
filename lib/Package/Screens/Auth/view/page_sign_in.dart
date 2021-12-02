@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
+import 'package:flutter_pet/Helper/Utils/key_firebase.dart';
 import 'package:flutter_pet/Helper/Utils/path_icons.dart';
 import 'package:flutter_pet/Package/Components/Btn/custom_btn.dart';
+import 'package:flutter_pet/Package/Components/Loading/app_loading.dart';
+import 'package:flutter_pet/Package/Components/Loading/enum_loading.dart';
 import 'package:flutter_pet/Package/Components/Text/rich_text.dart';
 import 'package:flutter_pet/Package/Components/Text_Filed/simple_filed.dart';
 import 'package:flutter_pet/Package/Screens/Auth/core/sign_in_controller.dart';
+import 'package:flutter_pet/Package/Screens/Auth/view/page_forgot.dart';
+import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_up.dart';
 import 'package:flutter_pet/Package/Screens/Auth/widget/hider_sign_in.dart';
 import 'package:flutter_pet/Services/Themes/theme_status.dart';
 import 'package:flutter_pet/Services/Validators/app_validators.dart';
@@ -63,7 +68,8 @@ class PageSignIn extends StatelessWidget {
                             debugPrint('onValidator :' + value.toString());
                             return AppValidators.isEmail(value);
                           },
-                          // onSaved: (value) => controller.type.value = value!,
+                          onSaved: (value) => _signInController.dataLogin
+                              .addAll({KeyFirebase.email: value}),
                         ),
                         SizedBox(height: 25.h),
                         SimpleFiled(
@@ -84,8 +90,8 @@ class PageSignIn extends StatelessWidget {
                           onSIcon: () => _signInController.viewPass(),
                           onValidator: (value) => AppValidators.isPass(value),
                           // onController: controller.password.value,
-                          // onSaved: (value) =>
-                          //     controller.password.value = value!,
+                          onSaved: (value) => _signInController.dataLogin
+                              .addAll({KeyFirebase.pass: value}),
                         ),
                         SizedBox(height: 10.h),
                       ],
@@ -96,9 +102,12 @@ class PageSignIn extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      debugPrint('Cilick Forgot PASS');
+                      Get.toNamed(PageForgot.id);
+                    },
                     child: Text(
-                      "Forget Passwored?",
+                      "Forgot Passwored?",
                       style: AppTheme.b1(context: context)?.copyWith(
                         decoration: TextDecoration.underline,
                         color: !AppTheme.getTheme(context: context)
@@ -108,28 +117,38 @@ class PageSignIn extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-                  child: CustomBtn(
-                    sizeHeight: 85.h,
-                    btnText: 'Sign Up',
-                    textStyle: AppTheme.h20(context: context)
-                        ?.copyWith(color: AppColors.whiteColor),
-                    // backColor: AppColors.btnColorBottom,
-                    backColor: [AppColors.movcolorLight, AppColors.whiteColor],
-                    onTap: () {
-                      debugPrint('Sign Up');
-                      _signInController.chackInput();
-                    },
+
+                // * *** BTN Login ***
+                Obx(
+                  () => Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+                    child: _signInController.isLodeng.value
+                        ? const AppLoading(type: ChooseLoading.BUTTON)
+                        : CustomBtn(
+                            sizeHeight: 85.h,
+                            btnText: 'Sign Up',
+                            textStyle: AppTheme.h20(context: context)
+                                ?.copyWith(color: AppColors.whiteColor),
+                            // backColor: AppColors.btnColorBottom,
+                            backColor: [
+                              AppColors.movcolorLight,
+                              AppColors.whiteColor
+                            ],
+                            onTap: () {
+                              debugPrint('Sign Up');
+                              _signInController.chackInput();
+                            },
+                          ),
                   ),
                 ),
+
                 //
                 // * Footer ..
                 RichTextAuth(
                   fWord: 'Dont Hanv an Account? ',
                   sWord: 'Register',
-                  onTap: () => Get.back(),
+                  onTap: () => Get.toNamed(PageSignUp.id),
                 ),
               ],
             ),

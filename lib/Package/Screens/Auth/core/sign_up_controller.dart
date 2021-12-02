@@ -64,8 +64,8 @@ class SignUpController extends GetxController {
         email: dataRegister[KeyFirebase.email],
         password: dataRegister[KeyFirebase.pass]);
     if (_user != null) {
-      // Get.toNamed(PageClinicProfile.id);
-      Get.snackbar('INFO', 'ok');
+      Get.offAllNamed(PageClinicProfile.id);
+      // Get.snackbar('INFO', 'ok');
     } else {
       Get.snackbar('Error', '$setMessage');
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Package/Components/Btn/simple_btn.dart';
+import 'package:flutter_pet/Package/Screens/Auth/view/page_sign_up.dart';
 import 'package:flutter_pet/Services/Themes/theme_status.dart';
 import 'package:get/get.dart';
 
@@ -25,10 +26,8 @@ class HiderSignInWidget extends StatelessWidget {
           backColor: [
             AppColors.movcolorLight,
             AppColors.pinkColor,
-          // ignore: todo
-          ], //TODO :: 00
+          ],
         ),
-        // const SizedBox(width: 20),
         const Spacer(),
         SimpleBtn(
           btnText: 'CLINIC SIGN UP',
@@ -38,7 +37,7 @@ class HiderSignInWidget extends StatelessWidget {
           // backColor: [AppColors.pinkColor, AppColors.movBackGround],
           backColor: AppColors.btnWithoutColor,
           onTap: () {
-            Get.back();
+            Get.toNamed(PageSignUp.id);
           },
         ),
       ],

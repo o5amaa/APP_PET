@@ -134,22 +134,24 @@ class PageSignUp extends StatelessWidget {
                     ),
                   ),
                   // SizedBox(height: 30.h),
-                  Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 60.h),
-                    child: _signUpController.isLodeng.value
-                        ? const AppLoading(type: ChooseLoading.BUTTON)
-                        : CustomBtn(
-                            sizeHeight: 85.h,
-                            btnText: 'Sign Up',
-                            textStyle: AppTheme.h20(context: context)
-                                ?.copyWith(color: AppColors.movBackGround),
-                            backColor: AppColors.btnColorBottom,
-                            onTap: () {
-                              debugPrint('Sign Up');
-                              _signUpController.chackInput();
-                            },
-                          ),
+                  Obx(
+                    () => Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 60.h),
+                      child: _signUpController.isLodeng.value
+                          ? const AppLoading(type: ChooseLoading.BUTTON)
+                          : CustomBtn(
+                              sizeHeight: 85.h,
+                              btnText: 'Sign Up',
+                              textStyle: AppTheme.h20(context: context)
+                                  ?.copyWith(color: AppColors.movBackGround),
+                              backColor: AppColors.btnColorBottom,
+                              onTap: () {
+                                debugPrint('Sign Up');
+                                _signUpController.chackInput();
+                              },
+                            ),
+                    ),
                   ),
                 ],
               ),
