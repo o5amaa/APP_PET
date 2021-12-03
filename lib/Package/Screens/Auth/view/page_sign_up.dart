@@ -48,18 +48,21 @@ class PageSignUp extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SimpleFiled(
-                              hint: 'Enter name',
-                              pIcon: Padding(
-                                padding: EdgeInsets.all(12.h),
-                                child: PathIcons.name,
-                              ),
-                              keybordType: TextInputType.name,
-                              onValidator: (value) {
-                                debugPrint('onValidator :' + value.toString());
-                                return AppValidators.isEmpty(value);
-                              },
-                              onSaved: (value) => _signUpController.dataRegister
-                                  .addAll({KeyFirebase.userNmae: value})),
+                            hint: 'Enter name',
+                            pIcon: Padding(
+                              padding: EdgeInsets.all(12.h),
+                              child: PathIcons.name,
+                            ),
+                            keybordType: TextInputType.name,
+                            onValidator: (value) {
+                              debugPrint('onValidator :' + value.toString());
+                              return AppValidators.isEmpty(value);
+                            },
+                            onSaved: (value) =>
+                                _signUpController.dataRegister.addAll(
+                              {KeyFirebase.userNmae: value},
+                            ),
+                          ),
                           SizedBox(height: 15.h),
                           SimpleFiled(
                             hint: 'Email',

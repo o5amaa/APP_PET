@@ -24,32 +24,32 @@ class SignUpController extends GetxController {
   //
 
   var name = ''.obs,
-      email = ''.obs,
-      password = ''.obs,
       location = ''.obs,
-      hours = ''.obs;
+      hours = ''.obs,
+      email = ''.obs,
+      password = ''.obs;
 
   TextEditingController? nameController,
-      emailController,
-      passwordController,
       locationController,
-      hoursController;
+      hoursController,
+      emailController,
+      passwordController;
 
   @override
   void onInit() {
     super.onInit();
     nameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
     locationController = TextEditingController();
     hoursController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
   }
 
   @override
   void onClose() {
-    nameController?.dispose();
     emailController?.dispose();
     passwordController?.dispose();
+    nameController?.dispose();
     locationController?.dispose();
     hoursController?.dispose();
   }

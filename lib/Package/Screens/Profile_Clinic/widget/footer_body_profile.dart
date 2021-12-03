@@ -11,11 +11,11 @@ class FooterBodyProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 30.w),
+      padding: EdgeInsets.symmetric(vertical: 50.h, horizontal: 30.w),
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
       constraints: BoxConstraints.expand(
         width: double.infinity.w,
-        height: 130.h,
+        height: 130.h + 20,
       ),
       decoration: BoxDecoration(
         color: AppColors.whiteColor,

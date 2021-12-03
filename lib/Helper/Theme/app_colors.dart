@@ -56,8 +56,8 @@ class AppColors {
   ];
 
   static final List<Color> waitDataColors = [
-    AppColors.movcolorLight,
-    AppColors.movLight,
     AppColors.pinkColor,
+    AppColors.movLight,
+    AppColors.movcolorLight,
   ];
 }

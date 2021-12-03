@@ -33,7 +33,7 @@ class PathIcons {
 
   static final FaIcon phoneNumber = FaIcon(
     FontAwesomeIcons.phoneAlt,
-    color: AppColors.blackColor,
+    color: AppColors.greyLight,
   );
   static final FaIcon errorInitFirebase = FaIcon(
     FontAwesomeIcons.exclamationCircle,
@@ -43,6 +43,16 @@ class PathIcons {
   static final FaIcon name = FaIcon(
     FontAwesomeIcons.signature,
     color: AppColors.greyLight,
+  );
+
+  static final FaIcon gallery = FaIcon(
+    FontAwesomeIcons.fileImage,
+    color: AppColors.whiteColor,
+  );
+
+  static final FaIcon trash = FaIcon(
+    FontAwesomeIcons.trash,
+    color: AppColors.whiteColor,
   );
 
   static final FaIcon location = FaIcon(

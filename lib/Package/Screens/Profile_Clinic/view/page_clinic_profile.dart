@@ -23,12 +23,13 @@ class PageClinicProfile extends StatelessWidget {
       appBar: AppBar(
         leadingWidth: 100.w,
         leading: Container(
-          margin: EdgeInsets.only(top: 10.w),
+          margin: EdgeInsets.only(top: 5.w),
+          // height: 300,
           child: TextButton(
               onPressed: () {
                 debugPrint('click log OUT');
                 _authControl.signOut();
-                
+
                 // AuthControl().signOut();
               },
               child: Text(
