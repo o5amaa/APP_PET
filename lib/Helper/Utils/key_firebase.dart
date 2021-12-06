@@ -8,4 +8,7 @@ class KeyFirebase {
   // *
   static const String location = 'location';
   static const String workingHours = 'workingHours';
+  static const String userRole = 'userRole';
+  // *
+  static const String colUser = 'user';
 }

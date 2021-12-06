@@ -29,6 +29,9 @@ class AppColors {
   static final Color darkGrey = _colorFromHex('#3A3B3C');
   static final Color gry = _colorFromHex('##F1F0F2');
 
+  static final Color blueColor = _colorFromHex('#045EC5');
+  static final Color sosColor = _colorFromHex('#52329E');
+// ter 0xFF
   static final Color nuonColor = Colors.transparent;
 
   // * btn Color
@@ -59,5 +62,10 @@ class AppColors {
     AppColors.pinkColor,
     AppColors.movLight,
     AppColors.movcolorLight,
+  ];
+
+  static final List<Color> infoColor = [
+    AppColors.blueColor,
+    AppColors.sosColor,
   ];
 }

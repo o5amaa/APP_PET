@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Helper/Utils/path_images.dart';
+import 'package:flutter_pet/Package/Screens/Profile_Clinic/core/clinic_profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class InfoImage extends StatelessWidget {
   const InfoImage({required void Function()? onPressed, Key? key})
@@ -9,6 +11,9 @@ class InfoImage extends StatelessWidget {
         super(key: key);
 
   final void Function()? _onPressed;
+
+  static final ClinicProfileController _profileController =
+      Get.find<ClinicProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +30,29 @@ class InfoImage extends StatelessWidget {
           child: Stack(
             children: [
               // * image
-              Container(
-                height: 90.w,
-                width: 90.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 2, color: AppColors.whiteColor),
-                  color: AppColors.movLight,
-                  image: const DecorationImage(
-                    image: //(_provideImage.image == null)
-                        // ?
-                        AssetImage(PathImage.imgUserpng),
-                    //       : FileImage(_provideImage.image!) as ImageProvider,
-                    fit: BoxFit.fill,
+              Obx(
+                () => Container(
+                  height: 90.w,
+                  width: 90.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 2, color: AppColors.whiteColor),
+                    color: AppColors.movLight,
+                    image: DecorationImage(
+                      image: _profileController.notFuond(true)
+                          ? (_profileController.image == null)
+                              ? const AssetImage(PathImage.imgUserpng)
+                              : FileImage(_profileController.image!)
+                                  as ImageProvider
+                          : const AssetImage(PathImage.imgUserpng),
+                      //       : FileImage(_provideImage.image!) as ImageProvider,
+
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
+
               // * Icon add image ..
               Positioned(
                 bottom: 1,

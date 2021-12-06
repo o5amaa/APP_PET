@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
+import 'package:flutter_pet/Helper/Utils/key_firebase.dart';
 import 'package:flutter_pet/Helper/Utils/path_images.dart';
 import 'package:flutter_pet/Package/Screens/Auth/core/auth_control.dart';
+import 'package:flutter_pet/Package/Screens/Profile_Clinic/core/clinic_profile_controller.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/body_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/footer_body_profile.dart';
 import 'package:flutter_pet/Package/Screens/Profile_Clinic/widget/hider_body_profil.dart';
@@ -14,6 +16,8 @@ class PageClinicProfile extends StatelessWidget {
   const PageClinicProfile({Key? key}) : super(key: key);
 
   static final AuthControl _authControl = Get.find<AuthControl>();
+
+  static final ClinicProfileController _profileController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +49,24 @@ class PageClinicProfile extends StatelessWidget {
         child: Column(
           children: [
             // *Hider Image
+
             Container(
               margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 30.h),
               // color: AppColors.whiteColor,//
               width: _size.width.w,
               height: _size.height * .3.w,
               decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage(PathImage.imgProfile),
+                image: DecorationImage(
+                  image: _profileController.image == null
+                      ? const AssetImage(PathImage.imgProfile)
+                      : FileImage(_profileController
+                          .userMap?[KeyFirebase.userImage]) as ImageProvider,
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(14.r)),
               ),
             ),
+
             // * Body  --
             Container(
               margin: EdgeInsets.only(top: 40.h),
