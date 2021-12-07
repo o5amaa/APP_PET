@@ -18,31 +18,58 @@ class AppRouters {
       name: PageTest.id,
       page: () => const PageTest(),
       binding: TestBinding(),
+      // ^ ***************************
+      fullscreenDialog: false,
+      transition: Transition.size,
+      transitionDuration: const Duration(milliseconds: 600),
     ),
     GetPage(
       name: PageSignUp.id,
       page: () => const PageSignUp(),
       binding: SignUpBinding(),
+      // ^ **********************
+      fullscreenDialog: false,
+      transition: Transition.rightToLeftWithFade,
+      // curve: Curves.bounceInOut,
+      transitionDuration: const Duration(seconds: 1),
     ),
     GetPage(
       name: PageSignIn.id,
       page: () => const PageSignIn(),
       binding: SignInBinding(),
+      // ^ ******************
+      fullscreenDialog: true,
+      transition: Transition.size,
+      transitionDuration: const Duration(milliseconds: 700),
     ),
     GetPage(
       name: PageClinicProfile.id,
       page: () => const PageClinicProfile(),
       binding: ClinicProfileBinding(),
+      // ^ **************************
+
+      fullscreenDialog: true,
+      transition: Transition.zoom,
+      // curve: Curves.bounceInOut,
+      transitionDuration: const Duration(milliseconds: 700),
     ),
     GetPage(
       name: PageForgot.id,
       page: () => const PageForgot(),
       binding: ForgorBinding(),
+// ^ ******************
+      fullscreenDialog: true,
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 800),
     ),
     GetPage(
       name: Wrapper.id,
       page: () => const Wrapper(),
       binding: WrapperBinding(),
+      // ^ ***************************
+      fullscreenDialog: false,
+      transition: Transition.size,
+      transitionDuration: const Duration(milliseconds: 600),
     ),
   ];
 }
