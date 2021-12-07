@@ -96,11 +96,12 @@ class PageSignUp extends StatelessWidget {
                             onSaved: (value) => _signUpController.dataRegister
                                 .addAll({KeyFirebase.pass: value}),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Text(
                             'Disription',
                             style: AppTheme.h25(context: context),
                           ),
+                          SizedBox(height: 13.h),
                           SimpleFiled(
                             hint: 'Location',
                             pIcon: Padding(
@@ -122,11 +123,11 @@ class PageSignUp extends StatelessWidget {
                               padding: EdgeInsets.all(12.h),
                               child: PathIcons.clock,
                             ),
-                            keybordType: TextInputType.datetime,
+                            keybordType: TextInputType.text,
                             onValidator: (value) {
                               debugPrint('onValidator :' + value.toString());
                               // ignore: todo
-                              return AppValidators.isTim(value); //TODO::
+                              return AppValidators.isEmpty(value); //TODO::
                             },
                             onSaved: (value) => _signUpController.dataRegister
                                 .addAll({KeyFirebase.workingHours: value}),

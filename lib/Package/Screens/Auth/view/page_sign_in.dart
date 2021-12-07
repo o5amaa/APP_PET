@@ -39,7 +39,7 @@ class PageSignIn extends StatelessWidget {
           width: _size.width.w,
           child: Form(
             key: _signInController.keyForm,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: AutovalidateMode.disabled,
             child: Column(
               children: [
                 // ** Hider
@@ -55,6 +55,7 @@ class PageSignIn extends StatelessWidget {
                       children: [
                         SimpleFiled(
                           hint: 'Email',
+                          cursorColor: AppColors.movBackGround,
                           style: AppTheme.h16(context: context)?.copyWith(
                               color: !AppTheme.getTheme(context: context)
                                   ? AppColors.movcolorLight
@@ -74,6 +75,7 @@ class PageSignIn extends StatelessWidget {
                         SizedBox(height: 25.h),
                         SimpleFiled(
                           hint: 'Password',
+                          cursorColor: AppColors.movBackGround,
                           isObscurText: _signInController.obscurText.value,
                           style: AppTheme.h16(context: context)?.copyWith(
                               color: !AppTheme.getTheme(context: context)

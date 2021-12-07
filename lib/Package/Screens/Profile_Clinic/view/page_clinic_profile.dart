@@ -57,10 +57,12 @@ class PageClinicProfile extends StatelessWidget {
               height: _size.height * .3.w,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: _profileController.image == null
+                  image: _profileController
+                              .getUserMap?[KeyFirebase.userImage] ==
+                          null
                       ? const AssetImage(PathImage.imgProfile)
-                      : FileImage(_profileController
-                          .userMap?[KeyFirebase.userImage]) as ImageProvider,
+                      : NetworkImage(_profileController
+                          .getUserMap?[KeyFirebase.userImage]) as ImageProvider,
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(14.r)),

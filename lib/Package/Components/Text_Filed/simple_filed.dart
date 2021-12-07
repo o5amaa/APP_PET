@@ -18,6 +18,7 @@ class SimpleFiled extends StatelessWidget {
     Widget? pIcon,
     Widget? sIcon,
     TextStyle? style,
+    Color cursorColor = Colors.white,
     void Function()? onSIcon,
   })  : _initValue = initValue,
         _keybordType = keybordType,
@@ -31,6 +32,7 @@ class SimpleFiled extends StatelessWidget {
         _sIcon = sIcon,
         _onSIcon = onSIcon,
         _style = style,
+        _cursorColor = cursorColor,
         super(key: key);
 
   final String? _initValue;
@@ -40,6 +42,7 @@ class SimpleFiled extends StatelessWidget {
   final String? Function(String?)? _onValidator;
   final TextEditingController? _onController;
   final TextStyle? _style;
+  final Color? _cursorColor;
 
   // ? decoration
   final String? _hint;
@@ -54,9 +57,7 @@ class SimpleFiled extends StatelessWidget {
       // * قيمة ديفولت
       initialValue: _initValue,
       //* تغيير لون المؤشر
-      cursorColor: !AppTheme.getTheme(context: context)
-          ? AppColors.whiteColor
-          : AppColors.blackColor,
+      cursorColor: _cursorColor ?? AppColors.whiteColor,
       //* نوع التكست المدخل
       keyboardType: _keybordType, //?? TextInputType.text,
       //* تشفير النص المدخل

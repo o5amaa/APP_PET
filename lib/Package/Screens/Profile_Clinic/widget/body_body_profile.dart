@@ -27,13 +27,11 @@ class BodyBodyProfileWidget extends StatelessWidget {
   static final ClinicProfileController _profileController =
       Get.put(ClinicProfileController());
 
-  static final ModelUser _modelUser = ModelUser();
-
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => _profileController.userMap!.isEmpty ||
-              _profileController.userMap == null
+      () => _profileController.getUserMap!.isEmpty ||
+              _profileController.getUserMap == null
           ? const AppLoading(type: ChooseLoading.PAGE)
           : Container(
               padding: EdgeInsets.symmetric(vertical: 8.h),
@@ -45,11 +43,12 @@ class BodyBodyProfileWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _profileController.userMap?[KeyFirebase.location],
+                        _profileController.getUserMap?[KeyFirebase.location] ??
+                            '',
                         style: AppTheme.b1(context: context),
                       ),
                       Text(
-                        _profileController.userMap?[KeyFirebase.email],
+                        _profileController.getUserMap?[KeyFirebase.email] ?? '',
                         style: AppTheme.b1(context: context),
                       ),
                     ],
@@ -124,7 +123,7 @@ class BodyBodyProfileWidget extends StatelessWidget {
                                   SimpleFiled(
                                     hint: 'Enter name',
                                     initValue: _profileController
-                                        .userMap?[KeyFirebase.userNmae],
+                                        .getUserMap?[KeyFirebase.userNmae],
                                     pIcon: Padding(
                                       padding: EdgeInsets.all(12.h),
                                       child: PathIcons.name,
@@ -135,8 +134,8 @@ class BodyBodyProfileWidget extends StatelessWidget {
                                           'onValidator :' + value.toString());
                                       return AppValidators.isEmpty(value);
                                     },
-                                    onSaved: (value) =>
-                                        _modelUser.fullName = value!,
+                                    onSaved: (value) => _profileController
+                                        .modelUser.fullName = value,
                                   ),
                                   SizedBox(height: 10.h),
                                   Text(
@@ -148,7 +147,7 @@ class BodyBodyProfileWidget extends StatelessWidget {
                                   SimpleFiled(
                                       hint: 'Location',
                                       initValue: _profileController
-                                          .userMap?[KeyFirebase.location],
+                                          .getUserMap?[KeyFirebase.location],
                                       pIcon: Padding(
                                         padding: EdgeInsets.all(12.h),
                                         child: PathIcons.location,
@@ -159,13 +158,13 @@ class BodyBodyProfileWidget extends StatelessWidget {
                                             'onValidator :' + value.toString());
                                         return AppValidators.isEmpty(value);
                                       },
-                                      onSaved: (value) =>
-                                          _modelUser.location = value!),
+                                      onSaved: (value) => _profileController
+                                          .modelUser.location = value),
                                   SizedBox(height: 15.h),
                                   SimpleFiled(
                                     hint: 'Working Hours',
                                     initValue: _profileController
-                                        .userMap?[KeyFirebase.workingHours],
+                                        .getUserMap?[KeyFirebase.workingHours],
                                     pIcon: Padding(
                                       padding: EdgeInsets.all(12.h),
                                       child: PathIcons.clock,
@@ -174,33 +173,35 @@ class BodyBodyProfileWidget extends StatelessWidget {
                                     onValidator: (value) {
                                       debugPrint(
                                           'onValidator :' + value.toString());
-                                      // ignore: todo
-                                      return AppValidators.isEmpty(
-                                          value); //TODO::
+                                      return AppValidators.isEmpty(value);
                                     },
-                                    onSaved: (value) =>
-                                        _modelUser.workingHours = value!,
+                                    onSaved: (value) => _profileController
+                                        .modelUser.workingHours = value,
                                   ),
                                   SizedBox(height: 15.h),
                                   // *  *** Fotter ---
-                                  Center(
-                                    child: _profileController.isLodeng.value
-                                        ? const AppLoading(
-                                            type: ChooseLoading.BUTTON)
-                                        : CustomBtn(
-                                            btnText: 'SAVA',
-                                            backColor: [
-                                              AppColors.movBackGround,
-                                              AppColors.movBackGround,
-                                            ],
-                                            sizeHeight: 50,
-                                            sizeWidth: _size.width.w * .5,
-                                            onTap: () {
-                                              var _i = _profileController.image;
-                                              print('*********** $_i');
-                                              // _profileController.chackInput();
-                                            },
-                                          ),
+                                  Obx(
+                                    () => Center(
+                                      child: _profileController.isLodeng.value
+                                          ? const AppLoading(
+                                              type: ChooseLoading.BUTTON)
+                                          : CustomBtn(
+                                              btnText: 'SAVA',
+                                              backColor: [
+                                                AppColors.movBackGround,
+                                                AppColors.movBackGround,
+                                              ],
+                                              sizeHeight: 50,
+                                              sizeWidth: _size.width.w * .5,
+                                              onTap: () {
+                                                var _i =
+                                                    _profileController.image;
+                                                // TODO : BTN SAVE Edite
+                                                debugPrint('*********** $_i');
+                                                _profileController.chackInput();
+                                              },
+                                            ),
+                                    ),
                                   ),
                                 ],
                               ),
