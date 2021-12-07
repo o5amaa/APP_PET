@@ -38,13 +38,19 @@ class ClinicProfileController extends GetxController {
   // **
   @override
   void onInit() {
+    getUserInfo();
     super.onInit();
     nameController = TextEditingController();
     locationController = TextEditingController();
     hoursController = TextEditingController();
     // &&
-    getUserInfo();
     // &&
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    debugPrint('onReady');
   }
 
   @override
@@ -187,6 +193,7 @@ class ClinicProfileController extends GetxController {
               ),
               duration: const Duration(seconds: 5),
             );
+            isLodeng(false);
           }
         },
       ).catchError((error) {

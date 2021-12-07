@@ -137,7 +137,7 @@ class SignUpController extends GetxController {
       modelUser.email = userData.email;
       modelUser.userRole = '2'; //! Defult Role .. 2=> عياده
       modelUser.fullName = dataRegister[KeyFirebase.userNmae];
-      modelUser.image = '';
+      // modelUser.image = '';
       modelUser.location = dataRegister[KeyFirebase.location];
       modelUser.workingHours = dataRegister[KeyFirebase.workingHours];
 

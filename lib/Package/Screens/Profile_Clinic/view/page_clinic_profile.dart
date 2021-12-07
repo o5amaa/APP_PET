@@ -17,11 +17,14 @@ class PageClinicProfile extends StatelessWidget {
 
   static final AuthControl _authControl = Get.find<AuthControl>();
 
-  static final ClinicProfileController _profileController = Get.find();
+  // static final ClinicProfileController _profileController = Get.find();
+  // static final ClinicProfileController _profileController = Get.put(ClinicProfileController());
 
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+
+    debugPrint('*********\nBuild page\n *********');
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
@@ -49,23 +52,24 @@ class PageClinicProfile extends StatelessWidget {
         child: Column(
           children: [
             // *Hider Image
-
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 30.h),
-              // color: AppColors.whiteColor,//
-              width: _size.width.w,
-              height: _size.height * .3.w,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: _profileController
-                              .getUserMap?[KeyFirebase.userImage] ==
-                          null
-                      ? const AssetImage(PathImage.imgProfile)
-                      : NetworkImage(_profileController
-                          .getUserMap?[KeyFirebase.userImage]) as ImageProvider,
-                  fit: BoxFit.cover,
+            GetX<ClinicProfileController>(
+              init: Get.put(ClinicProfileController()),
+              builder: (controller) => Container(
+                margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 30.h),
+                // color: AppColors.whiteColor,//
+                width: _size.width.w,
+                height: _size.height * .3.w,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: controller.getUserMap?[KeyFirebase.userImage] == null
+                        ? const AssetImage(PathImage.imgProfile)
+                        : NetworkImage(
+                                controller.getUserMap?[KeyFirebase.userImage])
+                            as ImageProvider,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(14.r)),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(14.r)),
               ),
             ),
 

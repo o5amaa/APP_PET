@@ -12,9 +12,6 @@ class InfoImage extends StatelessWidget {
 
   final void Function()? _onPressed;
 
-  static final ClinicProfileController _profileController =
-      Get.find<ClinicProfileController>();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,8 +27,9 @@ class InfoImage extends StatelessWidget {
           child: Stack(
             children: [
               // * image
-              Obx(
-                () => Container(
+              GetX<ClinicProfileController>(
+                init: Get.find<ClinicProfileController>(),
+                builder: (controller) => Container(
                   height: 90.w,
                   width: 90.w,
                   decoration: BoxDecoration(
@@ -39,11 +37,10 @@ class InfoImage extends StatelessWidget {
                     border: Border.all(width: 2, color: AppColors.whiteColor),
                     color: AppColors.movLight,
                     image: DecorationImage(
-                      image: _profileController.notFuond(true)
-                          ? (_profileController.image == null)
+                      image: controller.notFuond(true)
+                          ? (controller.image == null)
                               ? const AssetImage(PathImage.imgUserpng)
-                              : FileImage(_profileController.image!)
-                                  as ImageProvider
+                              : FileImage(controller.image!) as ImageProvider
                           : const AssetImage(PathImage.imgUserpng),
                       //       : FileImage(_provideImage.image!) as ImageProvider,
 
