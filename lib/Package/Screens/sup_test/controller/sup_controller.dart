@@ -28,8 +28,6 @@ class SupController extends GetxController {
 
   RxList<Map?>? emp = RxList<Map>([]);
 
-  Rx qurySnap = ''.obs;
-
   @override
   void onInit() {
     isLaodeng(false);
@@ -95,12 +93,13 @@ class SupController extends GetxController {
       isLaodeng(true);
       _reference.snapshots().listen((event) {
         isLaodeng(false);
-        qurySnap.value = event;
+        // qurySnap.value = event;
         if (event.docs.isNotEmpty) {
           for (var element in event.docs) {
             debugPrint('${element.data()}');
             // emp?.add(element.data() as Map<dynamic, dynamic>);
-            emp?.add(element.data() as Map<dynamic, dynamic>);}
+            emp?.add(element.data() as Map<dynamic, dynamic>);
+          }
           debugPrint('All Emp:\n $emp');
           CustomSnackBar.showSnackBar(
             context: Get.context,
