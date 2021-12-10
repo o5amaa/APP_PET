@@ -84,4 +84,15 @@ class PathIcons {
     FontAwesomeIcons.signInAlt,
     color: AppColors.blackColor,
   );
+  //*=======  SUP TEST PAGE  =======*/
+
+  static final FaIcon delete = FaIcon(
+    FontAwesomeIcons.minusSquare,
+    color: AppColors.torchReda,
+  );
+
+  static FaIcon add = FaIcon(
+    FontAwesomeIcons.plusSquare,
+    color: AppColors.pinkColor,
+  );
 }

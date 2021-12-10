@@ -177,7 +177,7 @@ class ClinicProfileController extends GetxController {
           isLodeng(true);
           if (value.data() != null) {
             isLodeng(true);
-            debugPrint('*********************** \n${value.data()}');
+            debugPrint('************** \n${value.data()}');
             getUserMap?.addAll(value.data() as Map);
             isLodeng(false);
           } else {
