@@ -9,13 +9,16 @@ import 'package:flutter_pet/Package/Screens/sup_test/widget/enum_bottomshet.dart
 import 'package:flutter_pet/Package/Screens/sup_test/widget/method_dilog.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:uuid/uuid.dart';
 
 class SupController extends GetxController {
 // ^ *======= Title Page =======*/
-  String title = 'Supe Page';
+  String title = 'All  Employys ';
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController nameController, addressController;
   RxBool isLaodeng = false.obs; //RxBool(false);
+
+  var nameEmp = ''.obs, addressEmp = ''.obs;
 
   //*================== Firebase =================*/
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -26,9 +29,13 @@ class SupController extends GetxController {
   EmployeeModel employModel = EmployeeModel();
   RxMap<String, dynamic> addEmployeeMap = RxMap<String, dynamic>({});
 
+  RxMap<String, dynamic> editEmployeeMap = RxMap<String, dynamic>({});
+
   RxList<Map?>? emp = RxList<Map>([]);
 
-  Rx qurySnap = ''.obs;
+  //~ *================== UUID =================*/
+  // RxString docId = ''.obs;
+  Uuid uuid = const Uuid();
 
   @override
   void onInit() {
@@ -65,6 +72,7 @@ class SupController extends GetxController {
   // *======= Chack =======*/
   Future<void> chack({
     ChooseBotomSheet? chooseBotomSheet = ChooseBotomSheet.add,
+    //~*======= INFO =======*/
     String? docId,
   }) async {
     if (!formKey.currentState!.validate()) {
@@ -73,16 +81,19 @@ class SupController extends GetxController {
       formKey.currentState!.save();
       if (chooseBotomSheet == ChooseBotomSheet.add) {
         debugPrint('/*================== Click btn Add! =================*/');
-        Future<bool> _back = addEmployees();
+        Future<bool> _backAdd = addEmployees();
         // ignore: unrelated_type_equality_checks
-        if (_back != false) {
+        if (_backAdd != false) {
           Get.back();
         }
       } else {
         debugPrint('/*======= Click ntn Edit! =======*/');
-        //todo  =>>
-
-        updateEployee(docId: docId);
+        var _backEdit = updateEployee(
+            docId: docId, addressEmp: addressEmp.value, nameEmp: nameEmp.value);
+        // ignore: unrelated_type_equality_checks
+        if (_backEdit != false) {
+          Get.back();
+        }
       }
     }
   }
@@ -95,12 +106,13 @@ class SupController extends GetxController {
       isLaodeng(true);
       _reference.snapshots().listen((event) {
         isLaodeng(false);
-        qurySnap.value = event;
         if (event.docs.isNotEmpty) {
+          emp?.clear();
           for (var element in event.docs) {
             debugPrint('${element.data()}');
             // emp?.add(element.data() as Map<dynamic, dynamic>);
-            emp?.add(element.data() as Map<dynamic, dynamic>);}
+            emp?.add(element.data() as Map<dynamic, dynamic>);
+          }
           debugPrint('All Emp:\n $emp');
           CustomSnackBar.showSnackBar(
             context: Get.context,
@@ -126,22 +138,31 @@ class SupController extends GetxController {
     }
   }
 
-  Future<void> getAllEmployee() async {
+//& *================== Get One Employee =================*/
+  Future<void> getOneEmployee({required String docID}) async {
     isLaodeng(true);
-    await _reference.get().then((value) {
-      isLaodeng(false);
-      for (var element in value.docs) {
-        //todo  TODO:: Edit this
-        // debugPrint('${element.data()}');
-        emp?.add(element.data() as Map<dynamic, dynamic>);
+    await _reference
+        .where(KeyFirebase.docIdEmp, isEqualTo: docID)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        isLaodeng(false);
+        debugPrint('$value');
+        CustomSnackBar.showSnackBar(
+          context: Get.context,
+          title: 'Get Employee',
+          message: 'Employee Get successfully.',
+          backgroundColor: AppColors.blueColor,
+        );
+      } else {
+        debugPrint('/*================== on Data =================*/');
+        isLaodeng(false);
+        CustomSnackBar.showSnackBar(
+            context: Get.context,
+            title: 'Wiring!!',
+            message: 'There are no data.',
+            backgroundColor: AppColors.pinkColor);
       }
-      CustomSnackBar.showSnackBar(
-        context: Get.context,
-        title: 'Get Employee',
-        message: 'Employee Get successfully.',
-        backgroundColor: AppColors.blueColor,
-      );
-      Get.back();
     }).catchError(
       (onError) {
         isLaodeng(false);
@@ -151,7 +172,7 @@ class SupController extends GetxController {
           context: Get.context,
           title: 'Error',
           message: 'Somthing went wrong',
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.pinkColor,
         );
       },
     );
@@ -159,9 +180,11 @@ class SupController extends GetxController {
 
   //^ *================== Add new employ =================*/
   Future<bool> addEmployees() async {
+    String _docID = uuid.v1();
+    addEmployeeMap.addAll({KeyFirebase.docIdEmp: _docID});
     try {
       isLaodeng(true);
-      return await _reference.doc().set(addEmployeeMap).then(
+      return await _reference.doc(_docID).set(addEmployeeMap).then(
         (value) {
           isLaodeng(false);
           debugPrint('/*================== Then Add value =================*/');
@@ -170,7 +193,7 @@ class SupController extends GetxController {
             context: Get.context,
             title: 'Employee Added',
             message: 'Employee added successfully.',
-            backgroundColor: AppColors.greemColor,
+            backgroundColor: AppColors.greenColor,
           );
           return true;
         },
@@ -198,22 +221,31 @@ class SupController extends GetxController {
 
   //^ *================== Edit Employee =================*/
 
-  Future<void> updateEployee({required String? docId}) async {
+  Future<bool> updateEployee({
+    required String? docId,
+    required String? addressEmp,
+    required String? nameEmp,
+  }) async {
+    editEmployeeMap.addAll({
+      KeyFirebase.nameEmp: nameEmp,
+      KeyFirebase.addressEmp: addressEmp,
+      KeyFirebase.docIdEmp: docId,
+    });
     try {
       isLaodeng(true);
-      await _reference.doc(docId).update(addEmployeeMap).then(
+      return await _reference.doc(docId).update(editEmployeeMap).then(
         (value) {
           isLaodeng(false);
           debugPrint(
               '/*================= Then Updeted value ================*/');
           clearEditingControllers();
-          Get.back();
           CustomSnackBar.showSnackBar(
             context: Get.context,
             title: 'Employee Updete',
             message: 'Employee updeted successfully.',
             backgroundColor: AppColors.blueColor,
           );
+          return true;
         },
       ).catchError(
         (onError) {
@@ -225,11 +257,49 @@ class SupController extends GetxController {
             message: 'Didn`t update.. please try again.',
             backgroundColor: Colors.green,
           );
+          return false;
         },
       );
     } catch (e) {
       CustomDilogMethod.cancelDialog();
       debugPrint('Edit Employee Catch: \n $e');
+      return false;
+    }
+  }
+
+  //^ *================== Delete Employee =================*/
+
+  Future<bool> deleteData(docID) async {
+    try {
+      isLaodeng(true);
+      return await _reference.doc(docID).delete().then(
+        (value) {
+          debugPrint('*================== Delete Employee =================*/');
+          isLaodeng(false);
+          CustomSnackBar.showSnackBar(
+              context: Get.context,
+              title: 'Delete Employee',
+              message: 'The employee has been successfully deleted.',
+              backgroundColor: AppColors.greenColor);
+          return true;
+        },
+      ).catchError(
+        (onError) {
+          debugPrint(
+              '*================ catchError Delete Employee ===============*/');
+          isLaodeng(false);
+          CustomSnackBar.showSnackBar(
+              context: Get.context,
+              title: 'Error',
+              message: 'The employee was not deleted successfully.',
+              backgroundColor: AppColors.torchReda);
+          return false;
+        },
+      );
+    } catch (e) {
+      isLaodeng(false);
+      debugPrint('Delete Employee Catch Error : \n $e');
+      return false;
     }
   }
 }

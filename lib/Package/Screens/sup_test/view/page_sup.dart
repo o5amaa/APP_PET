@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pet/Helper/Theme/app_colors.dart';
 import 'package:flutter_pet/Helper/Utils/key_firebase.dart';
 import 'package:flutter_pet/Helper/Utils/path_icons.dart';
-import 'package:flutter_pet/Model/user_model.dart';
 import 'package:flutter_pet/Package/Components/Loading/app_loading.dart';
 import 'package:flutter_pet/Package/Components/Loading/enum_loading.dart';
 import 'package:flutter_pet/Package/Screens/sup_test/controller/sup_controller.dart';
@@ -24,7 +22,7 @@ class PageSup extends StatelessWidget {
     SupController _supController = Get.find<SupController>();
     String _empty = 'Empty';
     Size _size = MediaQuery.of(context).size;
-    print('${_supController.emp?.length}');
+    debugPrint('${_supController.emp?.length}');
 
     return Scaffold(
         // ?======= Appbar =======*/
@@ -34,12 +32,15 @@ class PageSup extends StatelessWidget {
             style: AppTheme.h16(context: context),
           ),
           actions: [
-            SizedBox(width: 5.w),
-            IconButton(
-              icon: PathIcons.add,
-              onPressed: () => {
+            InkWell(
+              hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              radius: 100.r,
+              borderRadius: BorderRadius.circular(100.r),
+              splashColor: AppColors.movLight.withOpacity(.5),
+              onTap: () => {
                 debugPrint('ADD Click ,,'),
-
                 //~*======= Bottom Sheet =======*/
                 CustomDilogMethod.buildBottmSheetMethod(
                   supController: _supController,
@@ -47,6 +48,29 @@ class PageSup extends StatelessWidget {
                   size: _size,
                 ),
               },
+              child: Container(
+                // margin: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
+                width: 90.w,
+                height: 20.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
+                child: PathIcons.add,
+                // child: IconButton(
+                //   icon: PathIcons.add,
+                //   onPressed: () => {
+                //     debugPrint('ADD Click ,,'),
+
+                //     //~*======= Bottom Sheet =======*/
+                //     CustomDilogMethod.buildBottmSheetMethod(
+                //       supController: _supController,
+                //       context: context,
+                //       size: _size,
+                //     ),
+                //   },
+                // ),
+              ),
             ),
           ],
         ),
@@ -83,24 +107,55 @@ class PageSup extends StatelessWidget {
                         ),
                         backgroundColor: AppColors.greyLight,
                       ),
+
+                      //&*================== Delete Btin Icon =================*/
                       trailing: IconButton(
                         icon: PathIcons.delete,
                         onPressed: () => {
                           debugPrint('/*======= Delete =======*/'),
+                          CustomDilogMethod.displayDeleteDialog(
+                            context,
+                            controller.emp?[index]?[KeyFirebase.docIdEmp],
+                            onConfirm: () {
+                              var _backDelet = controller.deleteData(controller
+                                  .emp?[index]?[KeyFirebase.docIdEmp]);
+                              // ignore: unrelated_type_equality_checks
+                              if (_backDelet != false) {
+                                Get.back();
+                              }
+                            },
+                          ),
                         },
                       ),
-                      onTap: () => {
-                        debugPrint('/*======= Edit =======*/'),
-                        debugPrint('/*======= Edit $index =======*/'),
+                      onTap: () {
+                        debugPrint('/*======= Edit =======*/');
+                        debugPrint('/*======= Edit $index =======*/');
+                        controller.nameController.text =
+                            controller.emp?[index]?[KeyFirebase.nameEmp];
+
+                        controller.addressController.text =
+                            controller.emp?[index]?[KeyFirebase.addressEmp];
+
+                        debugPrint(
+                            '${controller.emp?[index]?[KeyFirebase.docIdEmp]}');
+                        debugPrint(
+                            '${controller.emp?[index]?[KeyFirebase.addressEmp]}');
+                        debugPrint(
+                            '${controller.emp?[index]?[KeyFirebase.nameEmp]}');
+
+                        debugPrint(
+                            'conttroller.text:: ${controller.addressController.text}');
+
                         //~*======= Bottom Sheet =======*/
                         CustomDilogMethod.buildBottmSheetMethod(
-                          supController: _supController,
-                          context: context,
-                          size: _size,
-                          chooseBotomSheet: ChooseBotomSheet.edit,
-                          // docId: controller.employeesList[index].docId,
-                          docId: controller.emp?[index].toString(),
-                        )
+                            supController: _supController,
+                            context: context,
+                            size: _size,
+                            chooseBotomSheet: ChooseBotomSheet.edit,
+                            docId: controller.emp?[index]
+                                ?[KeyFirebase.docIdEmp],
+                            nameEmp: controller.nameController.text,
+                            addressEmp: controller.addressController.text);
                       },
                     ),
                   ),

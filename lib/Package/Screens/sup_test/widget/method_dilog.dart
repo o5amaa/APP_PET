@@ -26,7 +26,10 @@ class CustomDilogMethod {
     required SupController supController,
     required BuildContext context,
     required Size size,
+    //~*======= Info =======*/
     String? docId,
+    String? addressEmp,
+    String? nameEmp,
   }) {
     return Get.bottomSheet(
       SingleChildScrollView(
@@ -52,8 +55,8 @@ class CustomDilogMethod {
                   //? *======= Title BottomSheet =======*/
                   Text(
                     chooseBotomSheet == ChooseBotomSheet.add
-                        ? 'Add new'
-                        : 'Edit',
+                        ? 'Add employee'
+                        : 'Edit employee',
                     style: AppTheme.h20(context: context),
                   ),
                   SizedBox(height: 10.h),
@@ -62,17 +65,18 @@ class CustomDilogMethod {
                   SimpleFiled(
                     cursorColor: AppColors.whiteColor,
                     hint: 'Employe',
-                    //todo  TODO: ADD ---
-                    initValue: chooseBotomSheet == ChooseBotomSheet.add
-                        ? null
-                        : 'Title Employee',
+                    // initValue: chooseBotomSheet == ChooseBotomSheet.add
+                    //     ? null
+                    //     : nameEmp ?? '',
                     pIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: PathIcons.name,
                     ),
                     keybordType: TextInputType.name,
                     onValidator: (value) => AppValidators.isEmpty(value),
+                    onController: supController.nameController,
                     onSaved: (value) {
+                      supController.nameEmp.value = value!;
                       supController.addEmployeeMap
                           .addAll({KeyFirebase.nameEmp: value});
                     },
@@ -89,16 +93,15 @@ class CustomDilogMethod {
                   SimpleFiled(
                     cursorColor: AppColors.whiteColor,
                     hint: 'Adress Employ',
-                    initValue: chooseBotomSheet == ChooseBotomSheet.add
-                        ? null
-                        : 'Adress Employ',
                     pIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: PathIcons.name,
                     ),
                     keybordType: TextInputType.name,
                     onValidator: (value) => AppValidators.isEmpty(value),
+                    onController: supController.addressController,
                     onSaved: (value) {
+                      supController.addressEmp.value = value!;
                       supController.addEmployeeMap
                           .addAll({KeyFirebase.addressEmp: value});
                     },
@@ -123,12 +126,17 @@ class CustomDilogMethod {
                             ?.copyWith(color: AppColors.movcolorLight),
                         backColor: AppColors.btnColorBottom,
                         onTap: () {
+                          // supController.addEmployeeMap
+                          // .addAll(KeyFirebase.docIdEmp );
                           chooseBotomSheet == ChooseBotomSheet.add
                               ? supController.chack()
                               : supController.chack(
                                   chooseBotomSheet: ChooseBotomSheet.edit,
+                                  //~*======= INFO =======*/
                                   docId: docId,
                                 );
+                          // print(
+                          //     '000000000000000000 $nameEmp| $addressEmp| $docId');
                         },
                       ),
                     ),
@@ -160,4 +168,25 @@ class CustomDilogMethod {
 
   //& *================== Cancel Dialog =================*/
   static void cancelDialog() => {Get.back()};
+
+  //& *================== Defult Dialog for Delet =================*/
+
+  static displayDeleteDialog(BuildContext context, String docId,
+          {void Function()? onConfirm}) =>
+      Get.defaultDialog(
+        title: 'Delete Employee',
+        titleStyle: AppTheme.h20(context: context),
+        middleText: "Are you sure you want to delete an employee?",
+        middleTextStyle: AppTheme.h16(context: context),
+        textCancel: 'Cancel',
+        onCancel: () {},
+        textConfirm: 'Confirm',
+        confirmTextColor: AppColors.whiteColor,
+        onConfirm: onConfirm ?? () {},
+        cancelTextColor: AppColors.movcolorLight,
+        radius: 30.r,
+        buttonColor: AppColors.movcolorLight.withOpacity(.5),
+        titlePadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+        backgroundColor: AppColors.pinkColor.withOpacity(.8),
+      );
 }

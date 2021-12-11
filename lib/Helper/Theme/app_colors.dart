@@ -30,7 +30,7 @@ class AppColors {
   static final Color gry = _colorFromHex('##F1F0F2');
 
   static final Color blueColor = _colorFromHex('#045EC5');
-  static final Color greemColor = _colorFromHex('#0E8A0A');
+  static final Color greenColor = _colorFromHex('#0E8A0A');
   static final Color sosColor = _colorFromHex('#52329E');
 // ter 0xFF
   static final Color nuonColor = Colors.transparent;
